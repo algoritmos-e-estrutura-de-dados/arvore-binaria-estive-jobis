@@ -1,4 +1,4 @@
-from node import Node
+from Nodulo import Nodulo
 
 
 class BinaryTree:
@@ -7,28 +7,28 @@ class BinaryTree:
         self.root = None
 
     def adicionar(self, value):
-        node = Node(value)
+        Nodulo = Nodulo(value)
         if self.root is None:
-            self.root = node
+            self.root = Nodulo
         else:
-            auxiliar = self.root
+            aux = self.root
             while (True):
-                if (auxiliar.value >= value):
-                    ref_cima = auxiliar
-                    auxiliar = auxiliar.getEsquerda()
-                    ref_baixo = True
+                if (aux.value >= value):
+                    Rcima = aux
+                    aux = aux.getEsquerda()
+                    Rbaixo = True
 
                 else:
-                    ref_cima = auxiliar
-                    auxiliar = auxiliar.getDireita()
-                    ref_baixo = False
+                    Rcima = aux
+                    aux = aux.getDireita()
+                    Rbaixo = False
 
-                if (auxiliar is None):
+                if (aux is None):
                     break
-                if ref_baixo is False:
-                    ref_cima.set_dir(node)
+                if Rbaixo is False:
+                    Rcima.set_dir(Nodulo)
                 else:
-                    ref_cima.set_esq(node)
+                    Rcima.set_esq(Nodulo)
 
     def achar(self, value):
         if value < self.value:
@@ -55,79 +55,79 @@ class BinaryTree:
                 self.root = self.root.get_dir()
             elif (self.root.get_esq() and self.root.get_dir()):
 
-                aux_node_ref_topo = self.root      
-                remove_node: Node = self.root.get_dir()     #
+                AuxNoduloTopo = self.root      
+                removerNodulo: Nodulo = self.root.get_dir()     #
 
-                while (remove_node.get_esq()):
-                    aux_node_ref_topo = remove_node
-                    remove_node = remove_node.get_esq()
+                while (removerNodulo.get_esq()):
+                    AuxNoduloTopo = removerNodulo
+                    removerNodulo = removerNodulo.get_esq()
 
-                self.root.value = remove_node.value
-                if remove_node.get_dir():
-                    if aux_node_ref_topo.value > remove_node.value:
-                        aux_node_ref_topo.set_esq(remove_node.get_dir())
-                    elif aux_node_ref_topo.value < remove_node.value:
-                        aux_node_ref_topo.set_dir(remove_node.get_dir())
+                self.root.value = removerNodulo.value
+                if removerNodulo.get_dir():
+                    if AuxNoduloTopo.value > removerNodulo.value:
+                        AuxNoduloTopo.set_esq(removerNodulo.get_dir())
+                    elif AuxNoduloTopo.value < removerNodulo.value:
+                        AuxNoduloTopo.set_dir(removerNodulo.get_dir())
                 else:
-                    if remove_node.value < aux_node_ref_topo.value:
-                        aux_node_ref_topo.set_esq(None)
+                    if removerNodulo.value < AuxNoduloTopo.value:
+                        AuxNoduloTopo.set_esq(None)
                     else:
-                        aux_node_ref_topo.set_dir(None)
+                        AuxNoduloTopo.set_dir(None)
             return True
 
-        new_ref_baixo = None  
-        node = self.root
+        new_Rbaixo = None  
+        Nodulo = self.root
 
-        while node and node.value != value:
-            new_ref_baixo = node
-            if value < node.value:
-                node = node.get_esq()
-            elif value > node.value:
-                node = node.get_dir()
+        while Nodulo and Nodulo.value != value:
+            new_Rbaixo = Nodulo
+            if value < Nodulo.value:
+                Nodulo = Nodulo.get_esq()
+            elif value > Nodulo.value:
+                Nodulo = Nodulo.get_dir()
 
 
-        if node is None or node.value != value:
+        if Nodulo is None or Nodulo.value != value:
             return False
 
-        elif node.get_esq() is None and node.get_dir() is None:
-            if value < new_ref_baixo.value:
-                new_ref_baixo.set_esq(None)
+        elif Nodulo.get_esq() is None and Nodulo.get_dir() is None:
+            if value < new_Rbaixo.value:
+                new_Rbaixo.set_esq(None)
             else:
-                new_ref_baixo.set_dir(None)
+                new_Rbaixo.set_dir(None)
             return True
 
    
-        elif node.get_esq() and node.get_dir() is None:
-            if value < new_ref_baixo.value:
-                new_ref_baixo.set_esq(node.get_esq())
+        elif Nodulo.get_esq() and Nodulo.get_dir() is None:
+            if value < new_Rbaixo.value:
+                new_Rbaixo.set_esq(Nodulo.get_esq())
             else:
-                new_ref_baixo.set_dir(node.get_esq())
+                new_Rbaixo.set_dir(Nodulo.get_esq())
             return True
 
-        elif node.get_esq() is None and node.get_dir():
-            if value < new_ref_baixo.value:
-                new_ref_baixo.set_esq(node.get_dir())
+        elif Nodulo.get_esq() is None and Nodulo.get_dir():
+            if value < new_Rbaixo.value:
+                new_Rbaixo.set_esq(Nodulo.get_dir())
             else:
-                new_ref_baixo.set_dir(node.get_dir())
+                new_Rbaixo.set_dir(Nodulo.get_dir())
             return True
         
         else:
-            aux_node_ref_topo = node
-            remove_node = node.get_dir()
-            while remove_node.get_esq():
-                aux_node_ref_topo = remove_node
-                remove_node = remove_node.get_esq()
-            node.value = remove_node.value
-            if remove_node.get_dir():
-                if aux_node_ref_topo.value > remove_node.value:
-                    aux_node_ref_topo.set_esq(remove_node.get_dir())
-                elif aux_node_ref_topo.value < remove_node.value:
-                    aux_node_ref_topo.set_dir(remove_node.get_dir())
+            AuxNoduloTopo = Nodulo
+            removerNodulo = Nodulo.get_dir()
+            while removerNodulo.get_esq():
+                AuxNoduloTopo = removerNodulo
+                removerNodulo = removerNodulo.get_esq()
+            Nodulo.value = removerNodulo.value
+            if removerNodulo.get_dir():
+                if AuxNoduloTopo.value > removerNodulo.value:
+                    AuxNoduloTopo.set_esq(removerNodulo.get_dir())
+                elif AuxNoduloTopo.value < removerNodulo.value:
+                    AuxNoduloTopo.set_dir(removerNodulo.get_dir())
             else:
-                if remove_node.value < aux_node_ref_topo.value:
-                    aux_node_ref_topo.set_esq(None)
+                if removerNodulo.value < AuxNoduloTopo.value:
+                    AuxNoduloTopo.set_esq(None)
                 else:
-                    aux_node_ref_topo.set_dir(None)
+                    AuxNoduloTopo.set_dir(None)
 
     def pre_ordem(self):
         if self.root is not None:
@@ -146,5 +146,5 @@ class BinaryTree:
         print(self.pre_ordem())
         print("Arvore Em-Ordem: ")
         print(self.em_ordem())
-        print("Arvore Pós-Ordem: ")
+        print("Arvore Pós-Ordem:")
         print(self.pos_ordem())
