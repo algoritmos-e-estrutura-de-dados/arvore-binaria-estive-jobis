@@ -51,6 +51,7 @@ while (True):
         print("Fim")
         break
 
+
     else:
-        print("Opção Invalida")
-        pass
+       print("Opção Invalida")
+pass
