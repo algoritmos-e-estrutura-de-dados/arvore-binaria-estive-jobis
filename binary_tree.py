@@ -142,9 +142,9 @@ class BinaryTree:
             self.root.pos_ordem()
 
     def print_bt(self):
-        print("Arvore atualizada (Pré-Ordem): ")
+        print("Arvore Pré-Ordem: ")
         print(self.pre_ordem())
-        print("Arvore atualizada (Em-Ordem): ")
+        print("Arvore Em-Ordem: ")
         print(self.em_ordem())
-        print("Arvore atualizada (Pós-Ordem): ")
+        print("Arvore Pós-Ordem: ")
         print(self.pos_ordem())
