@@ -7,20 +7,32 @@ class BinaryTree:
         self.root = None
 
     def adicionar(self, value):
-        if value < self.value:
-            if self.esquerda is None:
-                    self.esquerda = Node(value)
-            else:
-                self.esquerda.adicionar(value)
-        else: 
-            if self.direita is None: 
-                self.right = Node(value)
-            else: 
-                self.direita.adicionar(value)
-                
+        node = Node(value)
+        if self.root is None:
+            self.root = node
+        else:
+            auxiliar = self.root
+            while (True):
+                if (auxiliar.value >= value):
+                    ref_cima = auxiliar
+                    auxiliar = auxiliar.getEsquerda()
+                    ref_baixo = True
+
+                else:
+                    ref_cima = auxiliar
+                    auxiliar = auxiliar.getDireita()
+                    ref_baixo = False
+
+                if (auxiliar is None):
+                    break
+                if ref_baixo is False:
+                    ref_cima.set_dir(node)
+                else:
+                    ref_cima.set_esq(node)
+
     def achar(self, value):
         if value < self.value:
-            if self.esquerda is None: 
+            if self.esquerda is None:
                 return False
             else:
                 return self.esquerda.achar(value)
@@ -30,61 +42,109 @@ class BinaryTree:
             else:
                 return self.direita.achar(value)
 
-    # Método Remover
-    def remover(root, key):
-        if not root:
-            return root
-
-        if root.val > key:
-            root.esquerda = remover(root.esquerda, key)
-
-        elif root.val < key:
-            root.direita = remover(root.direita, key)
-
-        else:
-            
-            if not root.direita:
-                return root.esquerda
-
-            if not root.esquerda:
-                return root.direita
-  
-            temp_value = root.direita
-            mini_value = temp_value.value
-            while temp_value.esquerda:
-                temp_value = temp_value.esquerda
-                mini_value = temp_value.value
-                
-            root.direita = remover(root.direita, root.value)
-        return root
+    def remover(self, value: int):
+        if self.root is None:
+            return False
     
-    def Altura(root):
-        if root is None:
-            return 0
-        return max(Altura(root.esquerda), Altura(root.direita))+1
-    
-    def getcol(h):
-        if h == 1:
-            return 1
-        return getcol(h-1) + getcol(h-1) + 1
+        elif self.root.value == value:
+            if (self.root.get_dir() is None and self.root.get_dir() is None):
+                self.root = None
+            elif (self.root.get_esq() and self.root.get_dir() is None):
+                self.root = self.root.get_esq()
+            elif (self.root.get_esq() is None and self.root.get_dir()):
+                self.root = self.root.get_dir()
+            elif (self.root.get_esq() and self.root.get_dir()):
 
-    def printArvore(M, root, col, Coluna, Altura):
-        if root is None:
-            return
-        M[row][col] = root.data
-        printArvore(M, root.esquerda, col-pow(2, Altura-2), Coluna+1, Altura-1)
-        printArvore(M, root.direita, col+pow(2, Altura-2), Coluna+1, Altura-1)
+                aux_node_ref_topo = self.root      
+                remove_node: Node = self.root.get_dir()     #
 
-    def PrinterDaArvore():
-        h = altura(Arvore.root)
-        col = getcol(h)
-        M = [[0 for _ in range(col)] for __ in range(h)]
-        printArvre(M, Arvore.root, col//2, 0, h)
-        for i in M:
-            for j in i:
-                if j == 0:
-                    print(" ", end=" ")
+                while (remove_node.get_esq()):
+                    aux_node_ref_topo = remove_node
+                    remove_node = remove_node.get_esq()
+
+                self.root.value = remove_node.value
+                if remove_node.get_dir():
+                    if aux_node_ref_topo.value > remove_node.value:
+                        aux_node_ref_topo.set_esq(remove_node.get_dir())
+                    elif aux_node_ref_topo.value < remove_node.value:
+                        aux_node_ref_topo.set_dir(remove_node.get_dir())
                 else:
-                    print(j, end=" ")
-            print("")
-    
+                    if remove_node.value < aux_node_ref_topo.value:
+                        aux_node_ref_topo.set_esq(None)
+                    else:
+                        aux_node_ref_topo.set_dir(None)
+            return True
+
+        new_ref_baixo = None  
+        node = self.root
+
+        while node and node.value != value:
+            new_ref_baixo = node
+            if value < node.value:
+                node = node.get_esq()
+            elif value > node.value:
+                node = node.get_dir()
+
+
+        if node is None or node.value != value:
+            return False
+
+        elif node.get_esq() is None and node.get_dir() is None:
+            if value < new_ref_baixo.value:
+                new_ref_baixo.set_esq(None)
+            else:
+                new_ref_baixo.set_dir(None)
+            return True
+
+   
+        elif node.get_esq() and node.get_dir() is None:
+            if value < new_ref_baixo.value:
+                new_ref_baixo.set_esq(node.get_esq())
+            else:
+                new_ref_baixo.set_dir(node.get_esq())
+            return True
+
+        elif node.get_esq() is None and node.get_dir():
+            if value < new_ref_baixo.value:
+                new_ref_baixo.set_esq(node.get_dir())
+            else:
+                new_ref_baixo.set_dir(node.get_dir())
+            return True
+        
+        else:
+            aux_node_ref_topo = node
+            remove_node = node.get_dir()
+            while remove_node.get_esq():
+                aux_node_ref_topo = remove_node
+                remove_node = remove_node.get_esq()
+            node.value = remove_node.value
+            if remove_node.get_dir():
+                if aux_node_ref_topo.value > remove_node.value:
+                    aux_node_ref_topo.set_esq(remove_node.get_dir())
+                elif aux_node_ref_topo.value < remove_node.value:
+                    aux_node_ref_topo.set_dir(remove_node.get_dir())
+            else:
+                if remove_node.value < aux_node_ref_topo.value:
+                    aux_node_ref_topo.set_esq(None)
+                else:
+                    aux_node_ref_topo.set_dir(None)
+
+    def pre_ordem(self):
+        if self.root is not None:
+            self.root.pre_ordem()
+
+    def em_ordem(self):
+        if self.root is not None:
+            self.root.em_ordem()
+
+    def pos_ordem(self):
+        if self.root is not None:
+            self.root.pos_ordem()
+
+    def print_bt(self):
+        print("Arvore atualizada (Pré-Ordem): ")
+        print(self.pre_ordem())
+        print("Arvore atualizada (Em-Ordem): ")
+        print(self.em_ordem())
+        print("Arvore atualizada (Pós-Ordem): ")
+        print(self.pos_ordem())
