@@ -129,22 +129,5 @@ class BinaryTree:
                 else:
                     AuxnodeTopo.set_dir(None)
 
-    def pre_ordem(self):
-        if self.root is not None:
-            self.root.pre_ordem()
-
-    def em_ordem(self):
-        if self.root is not None:
-            self.root.em_ordem()
-
-    def pos_ordem(self):
-        if self.root is not None:
-            self.root.pos_ordem()
-
-    def print_bt(self):
-        print("Arvore Pré-Ordem: ")
-        print(self.pre_ordem())
         print("Arvore Em-Ordem: ")
         print(self.em_ordem())
-        print("Arvore Pós-Ordem:")
-        print(self.pos_ordem())

@@ -32,16 +32,8 @@ class Node:
                 return self.direita.procurar(busca)
             else:
                 return False
-            
-    def pre_ordem(self):
-        if self:
-            print(str(self.value))
-            if self.esquerda:
-                self.esquerda.pre_ordem()
-            if self.direita:
-                self.direita.pre_ordem()
     
-    def em_ordem(self):
+    def Print(self):
         if self:
             if self.esquerda:
                 self.esquerda.em_ordem()
@@ -49,12 +41,5 @@ class Node:
             if self.direita:
                 self.direita.em_ordem()
 
-    def pos_ordem(self):
-        if self:
-            if self.esquerda:
-                self.esquerda.pos_ordem()
-            if self.direita:
-                self.direita.pos_ordem()
-            print (str(self.value))
             
     
